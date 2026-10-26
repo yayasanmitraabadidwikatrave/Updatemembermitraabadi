@@ -32,6 +32,11 @@ footer{background:linear-gradient(100deg,#173b72,#0c2d60);color:white;padding:17
 .payment-card p{line-height:1.6;color:#435873}.payment-details{background:#f4f8fd;border-radius:10px;padding:12px;margin:14px 0}.qr-wrap{border:1px solid #d8e5f4;border-radius:12px;padding:10px;text-align:center;background:#fff}.qr-wrap img{display:block;width:100%;height:auto;border-radius:8px}.qr-wrap p{font-size:12px;margin:8px 0 0}
 @media(max-width:650px){.payment-card{grid-template-columns:1fr}.qr-wrap{max-width:330px;margin:auto}}
 
+
+.availability{display:inline-flex;align-items:center;justify-content:center;margin:0 auto 8px;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.5px}
+.availability.open{background:#e6f7ed;color:#167342;border:1px solid #b8e7ca}
+.availability.closed{background:#fff0f0;color:#c32632;border:1px solid #f3c4c8}
+
 </style>
 </head>
 <body>
@@ -93,15 +98,22 @@ footer{background:linear-gradient(100deg,#173b72,#0c2d60);color:white;padding:17
 <footer><div class="wrap foot"><span>© 2026 Referensi Kerja Mitra Abadi Dwika Trave. All rights reserved.</span><div class="footlogo">M<span>A</span>D <small style="font-size:9px;letter-spacing:0">REFERENSI KERJA MITRA ABADI DWIKA TRAVE</small></div></div></footer>
 <script>
 const companies=[
-{name:'PT Mikuni',logo:'M<span style="color:#e9232e">A</span> MIKUNI',cls:'mikuni'},
-{name:'PT Midea',logo:'◯ Midea',cls:'midea'},
-{name:'PT Musashi',logo:'◎ MUSASHI',cls:'musashi'},
-{name:'PT Hitachi',logo:'HITACHI',cls:'hitachi'},
-{name:'PT Daikin',logo:'◢ DAIKIN',cls:'daikin'},
-{name:'PT Epson',logo:'EPSON',cls:'epson'},
-{name:'PT Nesinak',logo:'◉ NESINAK',cls:'nesinak'}];
+{name:'PT Mikuni',logo:'M<span style="color:#e9232e">A</span> MIKUNI',cls:'mikuni',status:'OPEN'},
+{name:'PT Midea',logo:'◯ Midea',cls:'midea',status:'OPEN'},
+{name:'PT Musashi',logo:'◎ MUSASHI',cls:'musashi',status:'CLOSE'},
+{name:'PT Hitachi',logo:'HITACHI',cls:'hitachi',status:'OPEN'},
+{name:'PT Daikin',logo:'◢ DAIKIN',cls:'daikin',status:'OPEN'},
+{name:'PT Epson',logo:'EPSON',cls:'epson',status:'CLOSE'},
+{name:'PT Nesinak',logo:'◉ NESINAK',cls:'nesinak',status:'CLOSE'}];
 const holder=document.getElementById('companies');
-companies.forEach(c=>{const card=document.createElement('article');card.className='company';card.innerHTML=`<div class="company-logo ${c.cls}">${c.logo}</div><h3>${c.name}</h3><button class="btn update" type="button">♟ &nbsp;Cek Update Member</button><button class="btn apply" type="button">➤ &nbsp;Lamar</button>`;card.querySelector('.update').onclick=()=>openLogin(c.name);card.querySelector('.apply').onclick=()=>openApplication(c.name);holder.append(card)});
+companies.forEach(c=>{
+ const card=document.createElement('article');card.className='company';
+ const badgeClass=c.status==='OPEN'?'open':'closed';
+ card.innerHTML=`<div class="company-logo ${c.cls}">${c.logo}</div><h3>${c.name}</h3><div class="availability ${badgeClass}">${c.status}</div><button class="btn update" type="button">♟ &nbsp;Cek Update Member</button><button class="btn apply" type="button">➤ &nbsp;Lamar</button>`;
+ card.querySelector('.update').onclick=()=>openLogin(c.name);
+ card.querySelector('.apply').onclick=()=>{if(c.status==='CLOSE'){alert('Pendaftaran '+c.name+' sedang CLOSE.');return;}openApplication(c.name)};
+ holder.append(card);
+});
 let selectedCompany='';
 function closePanels(){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'))}
 function openApplication(name){closePanels();selectedCompany=name;document.getElementById('companyLabel').textContent='Perusahaan tujuan: '+name;document.getElementById('application').classList.add('active');document.getElementById('application').scrollIntoView({behavior:'smooth',block:'start'})}

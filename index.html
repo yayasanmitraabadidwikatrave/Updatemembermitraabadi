@@ -37,12 +37,40 @@ footer{background:linear-gradient(100deg,#173b72,#0c2d60);color:white;padding:17
 .availability.open{background:#e6f7ed;color:#167342;border:1px solid #b8e7ca}
 .availability.closed{background:#fff0f0;color:#c32632;border:1px solid #f3c4c8}
 
+
+.access-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#092c60ee,#1454a0f2)}
+.access-box{width:100%;max-width:420px;background:#fff;border-radius:18px;padding:26px;box-shadow:0 18px 60px #001a3d66;text-align:center}
+.access-logo{font-size:58px;font-weight:1000;letter-spacing:-7px;line-height:1;color:#123b77}.access-logo span:nth-child(2){color:#e9232e}
+.access-warning{margin:15px 0;padding:11px;border:1px solid #f0b9bd;border-radius:9px;background:#fff1f2;color:#a51f2a;font-size:13px;font-weight:800;line-height:1.5}
+.access-box h2{margin:10px 0;color:#092c60}.access-box p{font-size:13px;color:#60738d;line-height:1.5}
+.access-box label{text-align:left;margin-top:12px}.access-box button{width:100%;margin-top:16px;border:0;border-radius:9px;padding:13px;background:#1454a0;color:#fff;font-weight:800;font-size:15px;cursor:pointer}
+.access-error{display:none;margin-top:12px;color:#c32632;font-size:13px;font-weight:700}
+
 </style>
 </head>
 <body>
 
+<div class="access-gate" id="accessGate">
+  <div class="access-box">
+    <div class="access-logo">M<span>A</span>D</div>
+    <h2>LOGIN AKSES PORTAL</h2>
+    <p>Masukkan username dan password untuk masuk ke portal.</p>
+    <div class="access-warning">PERINGATAN: Sebarluaskan link = PUTUS MITRA. Akses portal dipantau dan pelanggaran dapat dikenakan sanksi.</div>
+    <form id="accessForm" style="display:block">
+      <label for="accessUsername">Username</label>
+      <input id="accessUsername" name="username" autocomplete="username" required>
+      <label for="accessPassword">Password</label>
+      <input id="accessPassword" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">MASUK PORTAL</button>
+      <div class="access-error" id="accessError">Username atau password salah.</div>
+    </form>
+  </div>
+</div>
+
+
 <div class="fee-notice" role="note" style="margin:16px auto;padding:14px 16px;max-width:980px;border:1px solid #d8a63c;border-radius:12px;background:#fff8e6;color:#513b12">
   <strong>INFORMASI BIAYA MCU & FORMALITAS</strong>
+  <div style="margin-top:7px;margin-bottom:5px;font-weight:800">Biaya mcu untuk sistem formalitas dengan rate di bawah</div>
   <div style="margin-top:7px">Biaya MCU: <strong>Rp650.000</strong></div>
   <div>Biaya formalitas: <strong>Rp100.000</strong></div>
   <small style="display:block;margin-top:8px">Biaya MCU bukan biaya resmi dari perusahaan, melainkan biaya yang ditetapkan secara mandiri oleh penyelenggara. Untuk jalur administrasi/referensi, pembayaran harap dilakukan di awal.</small>
@@ -53,7 +81,7 @@ footer{background:linear-gradient(100deg,#173b72,#0c2d60);color:white;padding:17
 <nav><a href="#beranda">⌂ &nbsp;Beranda</a><a href="#perusahaan">▦ &nbsp;Perusahaan</a><a href="#login-area">♟ &nbsp;Login Member</a><a href="#tentang">ⓘ &nbsp;Tentang Kami</a></nav>
 </div></header>
 <section class="hero" id="beranda"><div class="wrap hero-inner">
-<div class="hero-brand"><div class="hero-logo"><span>M</span><span class="a">A</span><span>D</span></div><div><div class="hero-name">REFERENSI KERJA<br>MITRA ABADI<br>DWIKA TRAVE</div><div class="tagline">Bersama Membangun Masa Depan<br>Melalui Kesempatan Kerja</div></div></div>
+<div class="hero-brand"><div class="hero-logo"><span>M</span><span class="a">A</span><span>D</span></div><div style="margin-top:10px;max-width:430px;padding:9px 12px;border-radius:9px;background:#fff1f2;border:1px solid #efb7bd;color:#a51f2a;font-size:12px;font-weight:800;line-height:1.45">Bagi yang menyebarluaskan link akan dikenakan sanksi karena kami mengetahui aksesnya.</div><div><div class="hero-name">REFERENSI KERJA<br>MITRA ABADI<br>DWIKA TRAVE</div><div class="tagline">Bersama Membangun Masa Depan<br>Melalui Kesempatan Kerja</div></div></div>
 <div class="intro"><h1>Portal Member Referensi Kerja Mitra Abadi Dwika Trave</h1><p>Pilih perusahaan tujuan Anda untuk melihat informasi, cek update member atau melamar pekerjaan.</p></div>
 </div></section>
 <main class="wrap" id="perusahaan"><h2 class="section-title">Daftar Perusahaan yang Tersedia</h2><div class="companies" id="companies"></div>
@@ -155,7 +183,7 @@ function openApplication(name){closePanels();selectedCompany=name;document.getEl
 function openLogin(name){closePanels();selectedCompany=name;document.getElementById('loginCompany').textContent='Perusahaan: '+name;document.getElementById('statusPanel').style.display='none';document.getElementById('loginForm').reset();document.getElementById('loginPanel').classList.add('active');document.getElementById('login-area');document.getElementById('loginPanel').scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginForm').addEventListener('submit',e=>{
  e.preventDefault();
- if(document.getElementById('username').value==='member958'&&document.getElementById('password').value==='mayang123'){
+ if((document.getElementById('username').value==='mayangadi'&&document.getElementById('password').value==='mayang123')||(document.getElementById('username').value==='member958'&&document.getElementById('password').value==='yodi123')){
    document.getElementById('statusHeading').textContent='Status Member — '+selectedCompany;
    const rows=document.querySelectorAll('#statusPanel .status-row');
    rows.forEach(row=>{
@@ -173,5 +201,19 @@ document.getElementById('loginForm').addEventListener('submit',e=>{
  }else alert('Username atau password tidak sesuai, atau akses belum tersedia untuk perusahaan ini.')
 });
 document.getElementById('applyForm').addEventListener('submit',e=>{e.preventDefault();const f=e.currentTarget;const get=n=>f.elements[n].value.trim();const body=['Pengajuan lamaran - '+selectedCompany,'','Nama: '+get('nama'),'NIK: '+get('nik'),'Email: '+get('email'),'No. HP: '+get('hp'),'TTL: '+get('ttl'),'TB: '+get('tb')+' cm','BB: '+get('bb')+' kg','Pendidikan: '+get('pendidikan'),'Pengalaman: '+get('pengalaman'),'','Catatan: CV perlu dilampirkan secara manual.'].join('\n');document.getElementById('emailResult').style.display='block';document.getElementById('emailResult').textContent='Draf email akan dibuka. Lampirkan CV secara manual lalu tekan Kirim.';location.href='mailto:okiyayasan@gmail.com?subject='+encodeURIComponent('Pengajuan Lamaran - '+selectedCompany)+'&body='+encodeURIComponent(body)});
+
+document.getElementById('accessForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const user = document.getElementById('accessUsername').value.trim();
+  const pass = document.getElementById('accessPassword').value;
+  if((user === 'mayangadi' && pass === 'mayang123') || (user === 'member958' && pass === 'yodi123')){
+    document.getElementById('accessGate').style.display = 'none';
+    document.body.style.overflow = '';
+  } else {
+    document.getElementById('accessError').style.display = 'block';
+  }
+});
+document.body.style.overflow = 'hidden';
+
 </script>
 </body></html>
